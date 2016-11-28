@@ -35,17 +35,21 @@ def compressImage(srcPath):
                     h,w=sImg.size 
                     sImg = sImg.transpose(Image.ROTATE_270)
                 elif orientation is 8: 
-                    sImg = sImg.transpose(90)
+                    h,w=sImg.size 
+                    sImg = sImg.transpose(Image.ROTATE_90)
                 elif orientation is 3: 
-                    sImg = sImg.transpose(180)
+                    h,w=sImg.size 
+                    sImg = sImg.transpose(Image.ROTATE_180)
                 elif orientation is 2: 
                     sImg = sImg.transpose(Image.FLIP_LEFT_RIGHT)
                 elif orientation is 5: 
-                    sImg = sImg.rotate(-90).transpose(Image.FLIP_LEFT_RIGHT)
+                    h,w=sImg.size 
+                    sImg = sImg.transpose(Image.ROTATE_270).transpose(Image.FLIP_LEFT_RIGHT)
                 elif orientation is 7: 
-                    sImg = sImg.rotate(90).transpose(Image.FLIP_LEFT_RIGHT)
+                    sImg = sImg.transpose(Image.ROTATE_90).transpose(Image.FLIP_LEFT_RIGHT)
                 elif orientation is 4: 
-                    sImg = sImg.rotate(180).transpose(Image.FLIP_LEFT_RIGHT)
+                    h,w=sImg.size 
+                    sImg = sImg.transpose(Image.ROTATE_180).transpose(Image.FLIP_LEFT_RIGHT)
             except: pass
 #           
             print w,h

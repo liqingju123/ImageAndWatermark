@@ -61,7 +61,7 @@ def watermark(im, mark, position, opacity=1):
             x = im.size[0] - mark.size[0]
             y = 0
         elif position == 'right_bottom':
-            x = im.size[0] - mark.size[0]-100
+            x = im.size[0] - mark.size[0]-100  #右下角有偏移
             y = im.size[1] - mark.size[1]-50
         else:
             x = (im.size[0] - mark.size[0]) / 2
