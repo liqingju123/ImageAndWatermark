@@ -16,7 +16,11 @@ def not_exists_makedir(dstPath):
 def is_image(srcFile):
     return os.path.isfile(srcFile) and re.match(r'^.*.(jpg|png|jpge)$', srcFile) #这里可以新增 gif 之类的后缀
 
-#压缩图片大小策略
+
+'''
+1,压缩图片大小策略
+2,保证大图的大小都在 1000左右
+'''
 def image_resize(sImg,w,h):
     if  w>3000:
         dImg=sImg.resize(((int)(w/3),(int)(h/3)),Image.ANTIALIAS)  #设置压缩尺寸和选项，注意尺寸要用括号
@@ -29,7 +33,11 @@ def image_resize(sImg,w,h):
 
     return dImg
  
-#检测图片是否旋转
+''' 
+1，如果图片有 90 度 基数倍 旋转 就要交换 宽高
+2，使用 rotate 进行旋转之后的保存 会出现 黑边的状况
+3，transpose 不会改变图片的宽高 只需要交换 宽高 就OK 了
+'''
 def image_transpose(srcFile, sImg):
     w,h=sImg.size
     try:
@@ -78,7 +86,7 @@ def compressImage(srcPath):
         #如果是文件就处理
         if  is_image(srcFile):     
             sImg=Image.open(srcFile)  
-            w, h, sImg = image_transpose(srcFile, sImg)
+            w, h, sImg = image_transpose(srcFile, sImg) 
             print w,h
             dImg =image_resize(sImg,w,h)
             dImg.save(dstFile) #也可以用srcFile原路径保存,或者更改后缀保存，save这个函数后面可以加压缩编码选项JPEG之类的  
