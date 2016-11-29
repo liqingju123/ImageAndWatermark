@@ -3,9 +3,9 @@
 from PIL import Image, ImageEnhance, ImageDraw, ImageFont
 import os
 
-def text2img(text, font_color="Blue", font_size=25):
-    """生成内容为 TEXT 的水印"""
 
+#生成内容为 TEXT 的水印
+def text2img(text, font_color="Blue", font_size=25):
     font = ImageFont.truetype('simsun.ttc', font_size)
     #多行文字处理
     text = text.split('\n')
@@ -25,9 +25,8 @@ def text2img(text, font_color="Blue", font_size=25):
         draw.text((0, i*height), text[i], fill=font_color)
     return mark
 
+# 设置透明度
 def set_opacity(im, opacity):
-    """设置透明度"""
-
     assert opacity >=0 and opacity < 1
     if im.mode != "RGBA":
         im = im.convert('RGBA')
@@ -38,16 +37,14 @@ def set_opacity(im, opacity):
     im.putalpha(alpha)
     return im
 
+#添加水印
 def watermark(im, mark, position, opacity=1):
-    """添加水印"""
-
     try:
         if opacity < 1:
             mark = set_opacity(mark, opacity)
         if im.mode != 'RGBA':
             im = im.convert('RGBA')
         if im.size[0] < mark.size[0] or im.size[1] < mark.size[1]:
-            print "The mark image size is larger size than original image file."
             return False
 
         #设置水印位置
@@ -68,11 +65,10 @@ def watermark(im, mark, position, opacity=1):
             y = (im.size[1] - mark.size[1]) / 2
 
         layer = Image.new('RGBA', im.size,)
-        mark.rotate(-90)
         layer.paste(mark,(x,y),mask=mark)
         return Image.composite(layer, im, layer)
     except Exception as e:
-        print ">>>>>>>>>>> WaterMark EXCEPTION:  " + str(e)
+        print str(e)
         return False
 
 def main(path_no_shuiyin,path_add_shuiyin):
@@ -83,9 +79,8 @@ def main(path_no_shuiyin,path_add_shuiyin):
     image = watermark(im,shuiyin_ljhy ,'right_bottom', 0.9)
     if image:
         image.save(path_add_shuiyin)
-#         image.show()
     else:
-        print "Sorry, Failed."
+        print "添加失败"
 
 
 if __name__ == '__main__':

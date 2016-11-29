@@ -19,5 +19,8 @@ else:
     
 path_tags =re.match(r'^.*.(jpg|png|jpge)$', path)  
 print path_tags
+
+
+
     
 
